@@ -60,18 +60,11 @@ sfml-network.lib
 
 ## Controles
 
-(Agregar aquí los controles del juego si ya los tienes definidos. Ejemplo:)  
 - Flecha izquierda/derecha: Mover pieza  
 - Flecha arriba: Rotar pieza  
 - Flecha abajo: Acelerar caída  
 - Barra espaciadora: Caída instantánea  
 - P: Pausar el juego  
-
----
-
-## Estructura del Proyecto
-
-(Se recomienda incluir si tienes carpetas específicas como `src/`, `include/`, `resource/`, etc.)
 
 ---
 
