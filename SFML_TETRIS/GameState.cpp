@@ -41,10 +41,14 @@ int blocks[7][4][4] =
 
 void GameState::initVariables()
 {
+	// Initialize random number generator
+	std::random_device rd;
+	std::mt19937 gen(rd());
+
 	// int
 	this->r = 0;
 	this->lef = 0;
-	this->_next = rand() % 7;
+	this->_next = gen() % 7;
 	this->rig = 0;
 	this->dx = 90;
 	this->dy = -180;
@@ -60,24 +64,30 @@ void GameState::initVariables()
 	this->highScore = 0;
 	this->level = 0;
 	this->subScore = 0;
-	
-	// bool
-	this->scorer = 0; //false
-	this->tet = 0;
-	this->z = 0;
-	this->downs = 0;
-	this->wait = 0;
-	this->overGame = 0;
-	this->stop = 0;
-	this->fall = 0;
-	this->mov = 0;
-	this->rot = 0;
-	this->_clear = 0;
-	this->over_ = 0;
-	this->gameOver_ = 0;
-	this->_pause = 0;
-	this->enterNick = 0;
 
+	// Random values (moved from header for proper initialization)
+	this->song = gen() % 5;
+	this->Random = gen() % 3;
+	this->player = gen() % 10;
+
+	// bool
+	this->scorer = false;
+	this->tet = false;
+	this->z = false;
+	this->downs = false;
+	this->wait = false;
+	this->overGame = false;
+	this->stop = false;
+	this->fall = false;
+	this->mov = false;
+	this->rot = false;
+	this->_clear = false;
+	this->over_ = false;
+	this->gameOver_ = false;
+	this->_pause = false;
+	this->enterNick = false;
+
+	// Initialize grid
 	for (int i = 0; i < 23; i++)
 	{
 		grid.push_back({ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 });

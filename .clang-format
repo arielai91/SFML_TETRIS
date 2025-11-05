@@ -1,0 +1,61 @@
+---
+# Clang-Format configuration for SFML Tetris project
+# Based on Google style with some customizations
+
+BasedOnStyle: Google
+Language: Cpp
+
+# Indentation
+IndentWidth: 4
+TabWidth: 4
+UseTab: ForIndentation
+ContinuationIndentWidth: 4
+AccessModifierOffset: -4
+
+# Line length
+ColumnLimit: 100
+
+# Braces
+BreakBeforeBraces: Allman
+AllowShortBlocksOnASingleLine: Empty
+AllowShortFunctionsOnASingleLine: Empty
+AllowShortIfStatementsOnASingleLine: Never
+AllowShortLoopsOnASingleLine: false
+
+# Pointers and references
+DerivePointerAlignment: false
+PointerAlignment: Left
+
+# Includes
+IncludeBlocks: Regroup
+SortIncludes: CaseSensitive
+IncludeCategories:
+  - Regex:           '^".*\.h"'
+    Priority:        1
+  - Regex:           '^<SFML/.*>'
+    Priority:        2
+  - Regex:           '^<.*>'
+    Priority:        3
+
+# Spacing
+SpaceBeforeParens: ControlStatements
+SpaceInEmptyParentheses: false
+SpacesInAngles: false
+SpacesInContainerLiterals: false
+SpacesInCStyleCastParentheses: false
+SpacesInParentheses: false
+SpacesInSquareBrackets: false
+
+# Alignment
+AlignAfterOpenBracket: Align
+AlignConsecutiveAssignments: false
+AlignConsecutiveDeclarations: false
+AlignOperands: true
+AlignTrailingComments: true
+
+# Other
+KeepEmptyLinesAtTheStartOfBlocks: false
+MaxEmptyLinesToKeep: 1
+NamespaceIndentation: None
+ReflowComments: true
+SortUsingDeclarations: true
