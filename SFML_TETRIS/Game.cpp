@@ -1,73 +1,134 @@
 #include "Game.h"
 
-
-
 // Funciones privadas
 
 void Game::initVariables()
 {
-	this->window = NULL;
+	this->window = nullptr;
 	this->fullscreen = false;
 	this->dt = 0.f;
 }
 
 void Game::InitWindow()
 {
-
-	std::ifstream ifs("Config/window.ini");
-	this->videomodes = sf::VideoMode::getFullscreenModes();
-
-
+	// Default values in case config file is missing or invalid
 	std::string title = "Tetris";
 	sf::VideoMode window_bounds = sf::VideoMode::getDesktopMode();
 	bool fullscreen = false;
-	unsigned framrate_limit = 120;
+	unsigned framerate_limit = 120;
 	bool vertical_sync_enable = false;
-	unsigned antialiasing_Level = 0;
+	unsigned antialiasing_level = 0;
 
-	if (ifs.is_open())
-	{
-		std::getline(ifs, title);
-		ifs >> window_bounds.width >> window_bounds.height;
-		ifs >> fullscreen;
-		ifs >> framrate_limit;
-		ifs >> vertical_sync_enable;
-		ifs >> antialiasing_Level;
+	// Try to load configuration from file
+	try {
+		std::ifstream ifs("Config/window.ini");
+
+		if (ifs.is_open())
+		{
+			std::getline(ifs, title);
+
+			// Validate and read window dimensions
+			if (!(ifs >> window_bounds.width >> window_bounds.height)) {
+				std::cerr << "Warning: Invalid window dimensions in config file. Using defaults.\n";
+				window_bounds = sf::VideoMode::getDesktopMode();
+				ifs.clear();
+			}
+
+			// Validate window dimensions
+			if (window_bounds.width < 640 || window_bounds.height < 480) {
+				std::cerr << "Warning: Window dimensions too small. Using desktop mode.\n";
+				window_bounds = sf::VideoMode::getDesktopMode();
+			}
+
+			// Read other settings with validation
+			if (!(ifs >> fullscreen)) {
+				fullscreen = false;
+				ifs.clear();
+			}
+
+			if (!(ifs >> framerate_limit) || framerate_limit == 0 || framerate_limit > 300) {
+				framerate_limit = 120;
+				ifs.clear();
+			}
+
+			if (!(ifs >> vertical_sync_enable)) {
+				vertical_sync_enable = false;
+				ifs.clear();
+			}
+
+			if (!(ifs >> antialiasing_level) || antialiasing_level > 16) {
+				antialiasing_level = 0;
+				ifs.clear();
+			}
+
+			ifs.close();
+		}
+		else
+		{
+			std::cerr << "Warning: Could not open Config/window.ini. Using default settings.\n";
+		}
+	}
+	catch (const std::exception& e) {
+		std::cerr << "Error reading window config: " << e.what() << "\nUsing default settings.\n";
 	}
 
-	ifs.close();
-
+	this->videomodes = sf::VideoMode::getFullscreenModes();
 	this->fullscreen = fullscreen;
-	this->windowSettings.antialiasingLevel = antialiasing_Level;
+	this->windowSettings.antialiasingLevel = antialiasing_level;
 
-	if(this->fullscreen)
-		this->window = new sf::RenderWindow(window_bounds, title, sf::Style::Fullscreen, windowSettings);
-	else
-		this->window = new sf::RenderWindow(window_bounds, title, sf::Style::Titlebar | sf::Style::Close, windowSettings);
+	// Create window with validated settings
+	try {
+		if (this->fullscreen) {
+			this->window = new sf::RenderWindow(window_bounds, title, sf::Style::Fullscreen, windowSettings);
+		}
+		else {
+			this->window = new sf::RenderWindow(window_bounds, title, sf::Style::Titlebar | sf::Style::Close, windowSettings);
+		}
 
-	this->window->setFramerateLimit(framrate_limit);
-	this->window->setVerticalSyncEnabled(vertical_sync_enable);
-
-
+		this->window->setFramerateLimit(framerate_limit);
+		this->window->setVerticalSyncEnabled(vertical_sync_enable);
+	}
+	catch (const std::exception& e) {
+		std::cerr << "Fatal error creating window: " << e.what() << std::endl;
+		throw;
+	}
 }
 
 void Game::initKeys()
 {
-	std::ifstream ifs("Config/supported_keys.ini");
+	try {
+		std::ifstream ifs("Config/supported_keys.ini");
 
-	if (ifs.is_open())
-	{
-		std::string key = "";
-		int key_value = 0;
-
-		while (ifs >> key >> key_value)
+		if (ifs.is_open())
 		{
-			this->supportedKeys[key] = key_value;
+			std::string key = "";
+			int key_value = 0;
+
+			while (ifs >> key >> key_value)
+			{
+				// Validate key value is within valid range
+				if (key_value >= 0 && key_value < sf::Keyboard::KeyCount) {
+					this->supportedKeys[key] = key_value;
+				}
+				else {
+					std::cerr << "Warning: Invalid key value for '" << key << "': " << key_value << std::endl;
+				}
+			}
+
+			ifs.close();
+
+			if (this->supportedKeys.empty()) {
+				std::cerr << "Warning: No valid keys loaded from config file.\n";
+			}
+		}
+		else
+		{
+			std::cerr << "Warning: Could not open Config/supported_keys.ini\n";
 		}
 	}
-
-	ifs.close();
-
+	catch (const std::exception& e) {
+		std::cerr << "Error loading key bindings: " << e.what() << std::endl;
+	}
 }
 
 

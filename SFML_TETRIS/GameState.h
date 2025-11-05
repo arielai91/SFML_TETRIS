@@ -42,11 +42,10 @@ private:
 
 	unsigned points, nivel, pointGameOver, NivelGameOver;
 
-	int song = rand() % 5;
-	
-
-	int Random = rand() % 3;
-	int player = rand() % 10;
+	// Note: Random values should be initialized in constructor/initVariables, not in header
+	int song;
+	int Random;
+	int player;
 
 	bool scorer, tet, z, downs, wait, overGame, stop, fall, mov, rot, _clear, over_, gameOver_, _pause, enterNick;
 

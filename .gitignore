@@ -361,3 +361,132 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+#############
+## CMake
+#############
+
+# CMake build directory
+build/
+Build/
+cmake-build-*/
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+CTestTestfile.cmake
+_deps
+
+# CMake generated files
+*.cmake
+!CMakeLists.txt
+Makefile
+compile_commands.json
+
+#############
+## Linux/Unix
+#############
+
+# Compiled Object files
+*.o
+*.ko
+*.obj
+*.elf
+
+# Linker output
+*.so
+*.so.*
+*.dylib
+
+# Executables
+*.exe
+*.out
+*.app
+tetris
+SFML_TETRIS
+
+# Core dumps
+core
+core.*
+
+#############
+## macOS
+#############
+
+# General
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Icon must end with two \r
+Icon
+
+# Thumbnails
+._*
+
+# Files that might appear in the root of a volume
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+
+# Directories potentially created on remote AFP share
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+#############
+## Editors
+#############
+
+# VS Code
+.vscode/
+*.code-workspace
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Vim
+[._]*.s[a-v][a-z]
+[._]*.sw[a-p]
+[._]s[a-rt-v][a-z]
+[._]ss[a-gi-z]
+[._]sw[a-p]
+*~
+tags
+
+# Emacs
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+*.elc
+auto-save-list
+tramp
+
+# JetBrains IDEs (CLion, etc.)
+.idea/
+*.iml
+*.iws
+cmake-build-*/
+
+#############
+## Project Specific
+#############
+
+# Backup files
+*.bak
+*.backup
+*.old
+
+# Temporary files
+*.tmp
+*.temp
+
+# User data that shouldn't be versioned
+SFML_TETRIS/Datos/registro_player.txt
